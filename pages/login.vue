@@ -5,20 +5,23 @@
              <v-form
                 ref="form"
                 lazy-validation
+                @submit.prevent="submit()"
             >
                 <v-text-field
+                    v-model="form.phone"
                     label="Phone"
-                    required
-                    value="+62"
+                    :error-messages="$v.form.phone.$dirty && !$v.form.phone.required ? 'test' : []"
+                    @blur="$v.form.phone.$touch()"
                     ></v-text-field>
-
-                <v-text-field
+                
+                <!-- <v-text-field
+                    v-model="form.password"
                     type="password"
                     label="Password"
-                    required
-                    ></v-text-field>
+                    
+                    ></v-text-field> -->
                 <div class="d-flex mt-2 justify-end" >
-                    <v-btn type="submit" color="green" to="/profile">
+                    <v-btn type="submit" color="green">
                         Login
                     </v-btn>
                 </div>
@@ -29,8 +32,51 @@
 </template>
 
 <script>
+import {
+  required,
+//   minLength,
+//   maxLength,
+} from "vuelidate/lib/validators";
+
 export default {
     name: 'LoginPage',
+    
+    data() {
+        return {
+            form: {
+                phone : '',
+                password : '',
+            }
+        }
+    },
+    
+    validations: {
+        form: {
+            phone: {
+                required
+            },
+        }
+        
+        // password: {
+        //     required,
+        //     minLength: minLength(8),
+        //     maxLength: maxLength(16),
+        // },
+    },
+    // computed: {
+    //     phoneNumberErrorMessage() {
+    //         return Date.now()
+    //     }
+    // },
+    methods: {
+        submit(){
+            this.$v.$touch()
+            if(this.$v.$invalid) {
+                return false
+            }
+        }
+    }
+   
 }
 </script>
 
