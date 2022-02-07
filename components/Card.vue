@@ -1,7 +1,7 @@
 <template>
     <v-card
         elevation="2"
-        class="card"
+        class="card rounded-lg my-4 "
     >
     <slot/>
     </v-card>    
