@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <!-- <OTP v-model="showOTP"/> -->
         <Card>
             <h1>Login</h1>
              <v-form
@@ -15,7 +16,6 @@
                     @blur="$v.form.phone.$touch()"
                     ></v-text-field>
                 
-                
                 <v-text-field
                     v-model="form.password"
                     type="password"
@@ -29,7 +29,7 @@
                         Login
                     </v-btn>
                 </div>
-                
+            
             </v-form>
         </Card>
     </div>
@@ -52,7 +52,8 @@ export default {
             form: {
                 phone : '+62',
                 password : '',
-            }
+            },
+            // showOTP: false,
         }
     },
     
@@ -64,7 +65,7 @@ export default {
             },
             password: {
                 required,
-                minLength: minLength(8),
+                minLength: minLength(4),
                 maxLength: maxLength(16),
             },
         }
@@ -89,7 +90,8 @@ export default {
             // console.log(this.$v)
             // perform async actions
             if(!this.$v.$invalid) {
-                return this.$router.push('/profile')
+                // return (this.showOTP = true)
+                // return this.$router.push('/profile')
             }
         }
     }

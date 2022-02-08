@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <OTP v-model="showOTP"/>
         <Card>
             <h1>Register</h1>
              <v-form
@@ -59,7 +60,8 @@ export default {
                 phone: '+62234123',
                 password: '',
                 country:'',
-            }
+            },
+            showOTP: false,
         }
     },
 
@@ -103,7 +105,8 @@ export default {
          submit(){
             this.$v.$touch()
             if(!this.$v.$invalid) {
-                return this.$router.push('/profile')
+                return (this.showOTP = true)
+                // return this.$router.push('/profile')
             }
         }
     },
