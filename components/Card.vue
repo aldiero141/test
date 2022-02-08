@@ -1,7 +1,7 @@
 <template>
     <v-card
         elevation="2"
-        class="card rounded-lg my-4 "
+        class="card rounded-lg"
     >
     <slot/>
     </v-card>    
@@ -16,5 +16,6 @@ export default {
 .card{
     padding: 2em 2.5em;
     width: 100%;
+    height: 100%;
 }
 </style>
