@@ -5,27 +5,33 @@
              <v-form
                 ref="form"
                 lazy-validation
+                @submit.prevent="submit()"
             >
                 <v-text-field
+                    v-model="form.phone"
                     label="Phone"
-                    required
-                    value="+62"
-                    ></v-text-field>
-
+                    :error-messages="phoneNumberErrorMessage"
+                    @blur="$v.form.phone.$touch()"
+                ></v-text-field>
+                
                 <v-text-field
+                    v-model="form.password"
                     type="password"
                     label="Password"
-                    required
+                    :error-messages="passwordErrorMessage"
+                    @blur="$v.form.password.$touch()"
                     ></v-text-field>
 
                 <v-text-field
+                    v-model="form.country"
                     type="text"
                     label="Country"
-                    required
+                    :error-messages="countryErrorMessage"
+                    @blur="$v.form.country.$touch()"
                     ></v-text-field>
 
                 <div class="d-flex mt-2 justify-end" >
-                    <v-btn type="submit" color="blue" to="/profile">
+                    <v-btn type="submit" color="blue">
                         register
                     </v-btn>
                 </div>
@@ -36,9 +42,73 @@
 </template>
 
 <script>
+import {
+    required,
+    // helpers,
+    minLength,
+    maxLength,
+    alpha,
+} from "vuelidate/lib/validators";
+
 export default {
     name: 'RegisterPage',
+
+    data() {
+        return {
+            form: {
+                phone: '+62234123',
+                password: '',
+                country:'',
+            }
+        }
+    },
+
+    validations: {
+        form: {
+            phone: { 
+                required, 
+            },
+            password: { 
+                required,
+                minLength: minLength(4),
+                maxLength: maxLength(16), 
+            },
+            country:{ 
+                required, 
+                alpha,
+            },
+        }
+    },
+    
+    computed: {
+        phoneNumberErrorMessage() {
+            return this.$v.form.phone.$dirty && !this.$v.form.phone.required ? 'Phone Number is Required' 
+            // : this.$v.form.phone.$dirty && !this.$v.form.phone.phoneNumberFormat ? 'Wrong phone number format'
+            : []
+        },
+        passwordErrorMessage() {
+            return this.$v.form.password.$dirty && !this.$v.form.password.required ? 'Password is Required' 
+            : this.$v.form.password.$dirty && !this.$v.form.password.minLength ? 'Password is too short'
+            : this.$v.form.password.$dirty && !this.$v.form.password.maxLength ? 'Password is too long'
+            : []
+        },
+        countryErrorMessage() {
+            return this.$v.form.country.$dirty && !this.$v.form.country.required ? 'Country is Required' 
+             : this.$v.form.country.$dirty && !this.$v.form.country.alpha ? 'Country field only accept alphabet'
+            : []
+        },
+    },
+
+    methods: {
+         submit(){
+            this.$v.$touch()
+            if(!this.$v.$invalid) {
+                return this.$router.push('/profile')
+            }
+        }
+    },
 }
+
 </script>
 
 <style scoped>
