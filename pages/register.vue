@@ -57,7 +57,7 @@ export default {
     data() {
         return {
             form: {
-                phone: '+62234123',
+                phone: '+62',
                 password: '',
                 country:'',
             },
