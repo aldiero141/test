@@ -7,19 +7,23 @@
                 lazy-validation
                 @submit.prevent="submit()"
             >
+                
                 <v-text-field
                     v-model="form.phone"
                     label="Phone"
-                    :error-messages="$v.form.phone.$dirty && !$v.form.phone.required ? 'test' : []"
+                    :error-messages="phoneNumberErrorMessage"
                     @blur="$v.form.phone.$touch()"
                     ></v-text-field>
                 
-                <!-- <v-text-field
+                
+                <v-text-field
                     v-model="form.password"
                     type="password"
                     label="Password"
-                    
-                    ></v-text-field> -->
+                    :error-messages="passwordErrorMessage"
+                    @blur="$v.form.password.$touch()"
+                    ></v-text-field>
+
                 <div class="d-flex mt-2 justify-end" >
                     <v-btn type="submit" color="green">
                         Login
@@ -34,17 +38,19 @@
 <script>
 import {
   required,
-//   minLength,
-//   maxLength,
+//   helpers,
+  minLength,
+  maxLength,
 } from "vuelidate/lib/validators";
 
+// const phoneNumberFormat = helpers.regex(/^(\+62)8[1-9][0-9]{6,9}$/i)
 export default {
     name: 'LoginPage',
     
     data() {
         return {
             form: {
-                phone : '',
+                phone : '+62',
                 password : '',
             }
         }
@@ -53,30 +59,40 @@ export default {
     validations: {
         form: {
             phone: {
-                required
+                required,
+                // phoneNumberFormat,
+            },
+            password: {
+                required,
+                minLength: minLength(8),
+                maxLength: maxLength(16),
             },
         }
         
-        // password: {
-        //     required,
-        //     minLength: minLength(8),
-        //     maxLength: maxLength(16),
-        // },
     },
-    // computed: {
-    //     phoneNumberErrorMessage() {
-    //         return Date.now()
-    //     }
-    // },
+    computed: {
+        phoneNumberErrorMessage() {
+            return this.$v.form.phone.$dirty && !this.$v.form.phone.required ? 'Phone Number is Required' 
+            // : this.$v.form.phone.$dirty && !this.$v.form.phone.phoneNumberFormat ? 'Wrong phone number format'
+            : []
+        },
+        passwordErrorMessage() {
+            return this.$v.form.password.$dirty && !this.$v.form.password.required ? 'Password is Required' 
+            : this.$v.form.password.$dirty && !this.$v.form.password.minLength ? 'Password is too short'
+            : this.$v.form.password.$dirty && !this.$v.form.password.maxLength ? 'Password is too long'
+            : []
+        }
+    },
     methods: {
         submit(){
             this.$v.$touch()
-            if(this.$v.$invalid) {
-                return false
+            // console.log(this.$v)
+            // perform async actions
+            if(!this.$v.$invalid) {
+                return this.$router.push('/profile')
             }
         }
     }
-   
 }
 </script>
 
