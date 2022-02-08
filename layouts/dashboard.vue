@@ -30,7 +30,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'nuxt test',
+      title: 'Nuxt Test',
     }
   },
 }
