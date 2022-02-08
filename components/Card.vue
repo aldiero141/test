@@ -16,6 +16,5 @@ export default {
 .card{
     padding: 2em 2.5em;
     width: 100%;
-    height: 100%;
 }
 </style>
