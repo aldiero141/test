@@ -61,7 +61,8 @@
                     this.snackbarColor = (rsp === this.expectedOtp) ? 'success' : 'warning'
                     this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`
                     this.snackbar = true
-                }, 3500)
+                    return rsp === this.expectedOtp ? this.$router.push('/profile') : []
+                }, 3000)
             }
         }
     }
