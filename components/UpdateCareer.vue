@@ -26,7 +26,7 @@
         <template #activator="{ on, attrs }">
           <v-text-field
             v-model="form.starting_from"
-            label=" Birthday"
+            label=" Starting From"
             readonly
             v-bind="attrs"
             :error-messages="startingErrorMessage"
@@ -51,7 +51,7 @@
         <template #activator="{ on, attrs }">
           <v-text-field
             v-model="form.ending_in"
-            label=" Birthday"
+            label=" Ending In"
             readonly
             v-bind="attrs"
             :error-messages="endingErrorMessage"

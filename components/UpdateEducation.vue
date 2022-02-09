@@ -20,7 +20,7 @@
         <template #activator="{ on, attrs }">
           <v-text-field
             v-model="form.graduation_time"
-            label=" Birthday"
+            label=" Graduation Time"
             readonly
             v-bind="attrs"
             :error-messages="graduationErrorMessage"
