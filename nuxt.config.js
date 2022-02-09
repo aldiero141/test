@@ -40,12 +40,20 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
   ],
 
+  proxy:{
+    '/api-web/': {
+      target: 'http://pretest-qa.dcidev.id/',
+      pathRewrite: { '^/api-web/': '/' },
+    },
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    proxy: true,
+
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
