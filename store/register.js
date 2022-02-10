@@ -1,5 +1,5 @@
 export const state = () => ({
-    users: {},
+    user: {},
     phoneNumber: '',
 })
   
@@ -7,8 +7,9 @@ export const actions = {
     async signUp({commit}, user) {
         const response = await this.$axios.post("api-web/api/v1/register", user)
         commit('setPhoneNumber', response)
+        commit('setUser', response)
         return response
-    }    
+    }
 }
 
 export const mutations = {
@@ -16,6 +17,6 @@ export const mutations = {
         state.phoneNumber = response.data.data.user.phone
    },
    setUser(state, response) {
-       state.users = response.data.data.user
+       state.user = response.data.data.user
    }
 }
