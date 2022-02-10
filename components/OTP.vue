@@ -3,13 +3,15 @@
     <div class="container">
       <h1 class="mb-8">OTP</h1>
       <v-otp-input
+        v-model="otp"
         length="4"
         class="justify-center"
         :disabled="loading"
         @finish="onFinish"
       ></v-otp-input>
-      <v-btn text color="blue" class="btn-resend">Resend OTP Code</v-btn>
-      {{ phoneNumber }}
+      <v-btn text color="blue" class="btn-resend" @click.stop="resendOTP"
+        >Resend OTP Code</v-btn
+      >
       <v-overlay absolute :value="loading">
         <v-progress-circular
           indeterminate
@@ -30,11 +32,10 @@ export default {
     value: Boolean,
   },
   data: () => ({
-    loading: false,
-    snackbar: false,
-    snackbarColor: 'default',
     otp: '',
     text: '',
+    snackbar: false,
+    snackbarColor: '',
     expectedOtp: '1337',
   }),
   computed: {
@@ -46,20 +47,36 @@ export default {
         this.$emit('input', value)
       },
     },
-    phoneNumber() {
-      return this.$store.state.register.phoneNumber
+    // user() {
+    //   return this.$store.state.register.user
+    // },
+    // phoneNumber() {
+    //   return this.$store.state.register.phoneNumber
+    // },
+    loading() {
+      return this.$store.state.otp.loading
     },
   },
+  // mounted() {
+  //   this.$store.dispatch('otp/otpRequest', {
+  //     phone: this.$store.state.register.phoneNumber,
+  //   })
+  // },
   methods: {
     onFinish(rsp) {
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-        this.snackbarColor = rsp === this.expectedOtp ? 'success' : 'warning'
-        this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`
-        this.snackbar = true
-        return rsp === this.expectedOtp ? this.$router.push('/profile') : []
-      }, 3000)
+      this.$store.dispatch('otp/otpMatch', {
+        user_id: this.$store.state.register.user.id,
+        otp_code: rsp,
+      })
+      return this.$router.push('/profile')
+    },
+    resendOTP() {
+      this.$store.dispatch('otp/otpRequest', {
+        phone: this.$store.state.register.phoneNumber,
+      })
+      this.snackbarColor = 'gray-darken-4'
+      this.snackbar = true
+      this.text = 'OTP has been resend'
     },
   },
 }

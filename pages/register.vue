@@ -32,6 +32,10 @@
         </div>
       </v-form>
     </Card>
+
+    <!-- <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
+      {{ text }}
+    </v-snackbar> -->
   </div>
 </template>
 
@@ -58,6 +62,9 @@ export default {
         device_type: 2,
       },
       showOTP: false,
+      // text: '',
+      // snackbar: false,
+      // snackbarColor: '',
     }
   },
 
@@ -109,7 +116,18 @@ export default {
 
       if (!this.$v.$invalid) {
         this.$store.dispatch('register/signUp', this.form)
-        return (this.showOTP = true)
+        // if (this.$store.state.register.error) {
+        //   this.text = this.$store.state.register.error
+        //   this.snackbar = true
+        //   this.snackbarColor = 'red'
+        //   this.showOTP = false
+        // }
+
+        this.showOTP = true
+        this.$store.dispatch('otp/otpRequest', {
+          phone: this.$store.state.register.phoneNumber,
+        })
+        // return (this.showOTP = true)
         // return this.$router.push('/profile')
       }
     },
