@@ -21,10 +21,8 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    { src: '@/plugins/validation', ssr: true }
-  ],
-  
+  plugins: [{ src: '@/plugins/validation', ssr: true }],
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -43,17 +41,21 @@ export default {
     'cookie-universal-nuxt',
   ],
 
-  proxy:{
+  proxy: {
     '/api-web/': {
       target: 'http://pretest-qa.dcidev.id/',
       pathRewrite: { '^/api-web/': '/' },
     },
   },
+
+  router: {
+    middleware: ['auth'],
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     proxy: true,
-
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

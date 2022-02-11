@@ -33,9 +33,9 @@
       </v-form>
     </Card>
 
-    <!-- <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
+    <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
       {{ text }}
-    </v-snackbar> -->
+    </v-snackbar>
   </div>
 </template>
 
@@ -50,7 +50,6 @@ import {
 
 export default {
   name: 'RegisterPage',
-
   data() {
     return {
       form: {
@@ -62,9 +61,9 @@ export default {
         device_type: 2,
       },
       showOTP: false,
-      // text: '',
-      // snackbar: false,
-      // snackbarColor: '',
+      text: '',
+      snackbar: false,
+      snackbarColor: '',
     }
   },
 
@@ -108,27 +107,31 @@ export default {
         ? 'Country field only accept alphabet'
         : []
     },
+    error() {
+      return this.$store.state.register.error
+    },
+    errorMessage() {
+      return this.$store.state.register.errorMessage
+    },
   },
 
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch()
-
       if (!this.$v.$invalid) {
-        this.$store.dispatch('register/signUp', this.form)
-        // if (this.$store.state.register.error) {
-        //   this.text = this.$store.state.register.error
-        //   this.snackbar = true
-        //   this.snackbarColor = 'red'
-        //   this.showOTP = false
-        // }
-
-        this.showOTP = true
-        this.$store.dispatch('otp/otpRequest', {
-          phone: this.$store.state.register.phoneNumber,
-        })
-        // return (this.showOTP = true)
-        // return this.$router.push('/profile')
+        const res = await this.$store.dispatch('register/signUp', this.form)
+        if (res) {
+          this.snackbar = false
+          this.text = ''
+          this.showOTP = true
+          this.$store.dispatch('otp/otpRequest', {
+            phone: this.$store.state.register.phoneNumber,
+          })
+        } else {
+          this.text = this.errorMessage
+          this.snackbar = true
+          this.snackbarColor = 'red'
+        }
       }
     },
   },

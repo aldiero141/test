@@ -48,7 +48,6 @@ import {
 // const phoneNumberFormat = helpers.regex(/^(\+62)8[1-9][0-9]{6,9}$/i)
 export default {
   name: 'LoginPage',
-
   data() {
     return {
       form: {
@@ -94,25 +93,30 @@ export default {
         ? 'Password is too long'
         : []
     },
-    // token() {
-    //   return this.$store.state.login.token
-    // },
+    token() {
+      return this.$store.state.login.token
+    },
     error() {
       return this.$store.state.login.error
     },
+    errorMessage() {
+      return this.$store.state.login.errorMessage
+    },
   },
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch()
-      // console.log(this.$v)
-      // perform async actions
       if (!this.$v.$invalid) {
-        this.$store.dispatch('login/signIn', this.form)
-        if (this.error) {
-          this.text = this.error
+        const res = await this.$store.dispatch('login/signIn', this.form)
+        if (res) {
+          this.snackbar = false
+          this.text = ''
+          this.$cookies.set('access_token', this.token.access_token)
+          this.$router.push('/profile')
+        } else {
+          this.text = this.errorMessage
           this.snackbar = true
           this.snackbarColor = 'red'
-          this.showOTP = false
         }
       }
     },

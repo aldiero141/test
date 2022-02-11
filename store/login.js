@@ -1,19 +1,24 @@
 export const state = () => ({
   token: {},
+  error: false,
+  errorMessage: '',
   loading: false,
 })
 
 export const actions = {
-  async signIn({ commit }, payload) {
-    const res = await this.$axios
+  signIn({ commit }, payload) {
+    return this.$axios
       .post('api-web/api/v1/oauth/sign_in', payload)
       .then((res) => {
+        commit('setError', false)
         commit('setToken', res)
+        return true
       })
       .catch((error) => {
-        commit('setError', error.response.data.error.errors.toString())
+        commit('setError', true)
+        commit('setErrorMessage', error.response.data.error.errors.toString())
+        return false
       })
-    return res
   },
 }
 
@@ -26,5 +31,8 @@ export const mutations = {
   },
   setError(state, res) {
     state.error = res
+  },
+  setErrorMessage(state, res) {
+    state.errorMessage = res
   },
 }

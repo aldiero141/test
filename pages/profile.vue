@@ -123,6 +123,7 @@
 export default {
   name: 'ProfilePage',
   layout: 'dashboard',
+  // middleware: ['auth'],
   data() {
     return {
       showUpdateProfile: false,
@@ -130,5 +131,10 @@ export default {
       showUpdateEducation: false,
     }
   },
+  // mounted() {
+  //   if (!this.$cookies.get('access_token')) {
+  //     return this.$router.push('/login')
+  //   }
+  // },
 }
 </script>
