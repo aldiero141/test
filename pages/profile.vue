@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column my-10" style="height: 100vh">
-    <UpdateProfile v-model="showUpdateProfile" />
-    <UpdateCareer v-model="showUpdateCareer" />
-    <UpdateEducation v-model="showUpdateEducation" />
+    <UpdateProfile v-model="showUpdateProfile" :datas="user" />
+    <UpdateCareer v-model="showUpdateCareer" :datas="career" />
+    <UpdateEducation v-model="showUpdateEducation" :datas="education" />
     <v-row class="align-center mb-4">
       <Card
         style="
@@ -64,7 +64,7 @@
               block
               color="green"
               class="mt-8"
-              @click.stop="showUpdateProfile = true"
+              @click.stop="handlerUpdateProfile"
               >Update Profile</v-btn
             >
           </Card>
@@ -101,7 +101,7 @@
             block
             color="green"
             class="mt-8"
-            @click.stop="showUpdateCareer = true"
+            @click.stop="handlerUpdateCareer"
             >Update Career</v-btn
           >
         </Card>
@@ -129,7 +129,7 @@
             block
             color="green"
             class="mt-8"
-            @click.stop="showUpdateEducation = true"
+            @click.stop="handlerUpdateEducation"
             >Update Education</v-btn
           >
         </Card>
@@ -161,17 +161,21 @@ export default {
       return this.$store.get('profile/user').education
     },
   },
-  // watch:{
-  //   user(){
-
-  //   }
-  // },
   mounted() {
     this.load()
   },
   methods: {
     async load() {
       await this.$store.dispatch('profile/getProfile')
+    },
+    handlerUpdateProfile() {
+      this.showUpdateProfile = true
+    },
+    handlerUpdateCareer() {
+      this.showUpdateCareer = true
+    },
+    handlerUpdateEducation() {
+      this.showUpdateEducation = true
     },
   },
 }

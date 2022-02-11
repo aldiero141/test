@@ -4,8 +4,8 @@
     <v-form ref="form" lazy-validation @submit.prevent="submit()">
       <v-text-field
         v-model="form.name"
-        label="Name"
         :error-messages="nameErrorMessage"
+        label="Name"
         @blur="$v.form.name.$touch()"
       ></v-text-field>
 
@@ -85,6 +85,7 @@ export default {
   name: 'UpdateProfileComponent',
   props: {
     value: Boolean,
+    datas: { type: Object, default: () => {} },
   },
   data() {
     return {
@@ -158,6 +159,16 @@ export default {
         ? 'Bio is Required'
         : []
     },
+    // user() {
+    //   return this.$store.get('profile/user')
+    // },
+  },
+  mounted() {
+    this.form.name = this.datas.name
+    this.form.gender = this.datas.gender
+    this.form.birthday = this.datas.birthday
+    this.form.hometown = this.datas.hometown
+    this.form.bio = this.datas.bio
   },
   methods: {
     submit() {
