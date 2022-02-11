@@ -3,12 +3,6 @@
     <h1 style="text-align: center">Update Career</h1>
     <v-form ref="form" lazy-validation @submit.prevent="submit()">
       <v-text-field
-        v-model="form.position"
-        label="Position"
-        :error-messages="positionErrorMessage"
-        @blur="$v.form.position.$touch()"
-      ></v-text-field>
-      <v-text-field
         v-model="form.company"
         label="Company"
         :error-messages="companyErrorMessage"
