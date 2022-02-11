@@ -13,6 +13,7 @@
         "
       />
     </v-row>
+    {{ user }}
     <v-row class="mt-4">
       <v-col class="mr-4">
         <v-row>
@@ -29,27 +30,27 @@
             <v-row class="ml-12">
               <p>Name :</p>
               <v-spacer />
-              <p class="mr-16">Test</p>
+              <p class="mr-16">{{ user.name ? user.name : '-' }}</p>
             </v-row>
             <v-row class="ml-12">
               <p>Gender :</p>
               <v-spacer />
-              <p class="mr-16">Test</p>
+              <p class="mr-16">{{ user.gender ? user.gender : '-' }}</p>
             </v-row>
             <v-row class="ml-12">
               <p>Birthday :</p>
               <v-spacer />
-              <p class="mr-16">Test</p>
+              <p class="mr-16">{{ user.birthday ? user.birthday : '-' }}</p>
             </v-row>
             <v-row class="ml-12">
               <p>Hometown :</p>
               <v-spacer />
-              <p class="mr-16">Test</p>
+              <p class="mr-16">{{ user.hometown ? user.hometown : '-' }}</p>
             </v-row>
             <v-row class="ml-12">
               <p>Bio :</p>
               <v-spacer />
-              <p class="mr-16">Test</p>
+              <p class="mr-16">{{ user.bio ? user.bio : '-' }}</p>
             </v-row>
             <v-btn
               block
@@ -65,24 +66,25 @@
         <Card class="pt-4">
           <h1 class="mb-8">Career</h1>
           <v-row class="ml-12">
-            <p>Position :</p>
-            <v-spacer />
-            <p class="mr-16">Test</p>
-          </v-row>
-          <v-row class="ml-12">
             <p>Company :</p>
             <v-spacer />
-            <p class="mr-16">Test</p>
+            <p class="mr-16">
+              {{ user.career.company_name ? user.career.company_name : '-' }}
+            </p>
           </v-row>
           <v-row class="ml-12">
             <p>Starting From :</p>
             <v-spacer />
-            <p class="mr-16">Test</p>
+            <p class="mr-16">
+              {{ user.career.starting_from ? user.career.starting_from : '-' }}
+            </p>
           </v-row>
           <v-row class="ml-12">
             <p>Ending In :</p>
             <v-spacer />
-            <p class="mr-16">Test</p>
+            <p class="mr-16">
+              {{ user.career.ending_in ? user.career.ending_in : '-' }}
+            </p>
           </v-row>
           <v-btn
             block
@@ -99,12 +101,22 @@
           <v-row class="ml-12">
             <p>School Name :</p>
             <v-spacer />
-            <p class="mr-16">Test</p>
+            <p class="mr-16">
+              {{
+                user.education.school_name ? user.education.school_name : '-'
+              }}
+            </p>
           </v-row>
           <v-row class="ml-12">
             <p>Graduation Time :</p>
             <v-spacer />
-            <p class="mr-16">Test</p>
+            <p class="mr-16">
+              {{
+                user.education.graduation_time
+                  ? user.education.graduation_time
+                  : '-'
+              }}
+            </p>
           </v-row>
           <v-btn
             block
@@ -131,10 +143,18 @@ export default {
       showUpdateEducation: false,
     }
   },
-  // mounted() {
-  //   if (!this.$cookies.get('access_token')) {
-  //     return this.$router.push('/login')
-  //   }
-  // },
+  computed: {
+    user() {
+      return this.$store.get('profile/user')
+    },
+  },
+  mounted() {
+    this.load()
+  },
+  methods: {
+    async load() {
+      await this.$store.dispatch('profile/getProfile')
+    },
+  },
 }
 </script>
