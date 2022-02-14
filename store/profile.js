@@ -85,13 +85,9 @@ export const actions = {
   },
   setAvatar({ dispatch }, payload) {
     return this.$axios
-      .post(
-        'api-web/api/v1/uploads/profile',
-        { image: payload },
-        {
-          headers: { Authorization: this.$cookies.get('access_token') },
-        }
-      )
+      .post('api-web/api/v1/uploads/profile', payload, {
+        headers: { Authorization: this.$cookies.get('access_token') },
+      })
       .then((res) => {
         // dispatch('set/user', res.data.data.user)
         console.log(res)

@@ -1,18 +1,22 @@
 <template>
   <Modal v-model="show">
-    <v-file-input
-      v-model="files"
-      accept="image/png, image/jpeg, image/bmp"
-      placeholder="Pick a Profile Picture"
-      prepend-icon="mdi-camera"
-      label="Profile Picture"
-    ></v-file-input>
+    <!-- <v-file-input
+        accept="image/png, image/jpeg, image/bmp"
+        placeholder="Pick a Profile Picture"
+        prepend-icon="mdi-camera"
+        label="Profile Picture"
+        @change="handleFileUpload($event)"
+      ></v-file-input> -->
+    <label
+      >File
+      <input type="file" @change="handleFileUpload($event)" />
+    </label>
     <v-col class="text-right"
       ><v-btn
         type="submit"
         color="green"
         class="text-right"
-        @click.stop="submit(files)"
+        @click.stop="submit()"
         >Save</v-btn
       ></v-col
     >
@@ -27,9 +31,7 @@ export default {
   },
   data() {
     return {
-      files: undefined,
-      currentImage: undefined,
-      previewImage: undefined,
+      file: null,
     }
   },
   computed: {
@@ -43,19 +45,19 @@ export default {
     },
   },
   methods: {
-    async submit(image) {
-      const res = await this.$store.dispatch('profile/setAvatar', image)
+    async submit() {
+      const formData = new FormData()
+      formData.append('image', this.file)
+      const res = await this.$store.dispatch('profile/setAvatar', formData)
       if (res) {
         this.show = false
       } else {
         this.show = true
       }
     },
-    // selectImage(image) {
-
-    //   // this.currentImage = image
-    //   // this.previewImage = URL.createObjectURL(this.currentImage)
-    // },
+    handleFileUpload(event) {
+      this.file = event.target.files[0]
+    },
   },
 }
 </script>

@@ -151,14 +151,6 @@
             >Update Education</v-btn
           >
         </Card>
-        <v-snackbar
-          v-model="snackbar"
-          :color="snackbarColor"
-          :timeout="2000"
-          style="justify-center"
-        >
-          {{ text }}
-        </v-snackbar>
       </v-col>
     </v-row>
   </div>

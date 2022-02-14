@@ -2,7 +2,6 @@
   <Modal v-model="show">
     <v-form @submit.prevent="submit()">
       <v-file-input
-        :rules="rules"
         accept="image/png, image/jpeg, image/bmp"
         placeholder="Pick a Profile Picture"
         prepend-icon="mdi-camera"
