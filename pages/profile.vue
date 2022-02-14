@@ -1,14 +1,28 @@
 <template>
   <div class="d-flex flex-column my-10" style="height: 100vh">
     <v-row class="align-center mb-4">
-      <Card
-        style="
-          background: url('https://picsum.photos/id/11/500/300') no-repeat;
-          background-position: center;
-          background-size: cover;
-          height: 30vh;
-        "
-      />
+      <Card class="d-flex align-center ma-0 pa-0" style="cursor: pointer">
+        <UpdateBanner v-model="showUpdateBanner" />
+        <img
+          src="https://picsum.photos/id/11/500/300"
+          alt="banner-default"
+          style="
+            object-fit: cover;
+            border-radius: 0.5em;
+            height: 30vh;
+            z-index: -0;
+          "
+          width="100%"
+          @click.stop="handlerUpdateBanner"
+        />
+        <!-- <img
+          v-else
+          :src="user.cover_picture.url"
+          alt="banner-default"
+          style="object-fit: cover; border-radius: 0.5em; height: 30vh"
+          width="100%"
+        /> -->
+      </Card>
     </v-row>
     <v-row class="mt-4" style="height: 100vh">
       <v-col class="mr-4">
@@ -161,7 +175,7 @@ export default {
       showUpdateCareer: false,
       showUpdateEducation: false,
       showUpdatePicture: false,
-      // showUpdateBanner: false,
+      showUpdateBanner: false,
     }
   },
   computed: {
@@ -193,6 +207,9 @@ export default {
     },
     handlerUpdatePicture() {
       this.showUpdatePicture = true
+    },
+    handlerUpdateBanner() {
+      this.showUpdateBanner = true
     },
   },
 }

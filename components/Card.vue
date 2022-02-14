@@ -1,20 +1,16 @@
 <template>
-    <v-card
-        elevation="2"
-        class="card rounded-lg"
-    >
-    <slot/>
-    </v-card>    
+  <v-card elevation="2" class="card rounded-lg">
+    <slot />
+  </v-card>
 </template>
 <script>
 export default {
-    name: 'CardComponent',
-
+  name: 'CardComponent',
 }
 </script>
 <style scoped>
-.card{
-    padding: 2em 2.5em;
-    width: 100%;
+.card {
+  padding: 2em 2.5em;
+  width: 100%;
 }
 </style>

@@ -1,19 +1,21 @@
 <template>
   <Modal v-model="show">
-    <v-form @submit.prevent="submit()">
-      <v-file-input
-        :rules="rules"
-        accept="image/png, image/jpeg, image/bmp"
-        placeholder="Pick a Profile Picture"
-        prepend-icon="mdi-camera"
-        label="Profile Picture"
-      ></v-file-input>
-      <v-col class="text-right"
-        ><v-btn type="submit" color="green" class="text-right"
-          >Save</v-btn
-        ></v-col
-      >
-    </v-form>
+    <v-file-input
+      v-model="files"
+      accept="image/png, image/jpeg, image/bmp"
+      placeholder="Pick a Profile Picture"
+      prepend-icon="mdi-camera"
+      label="Profile Picture"
+    ></v-file-input>
+    <v-col class="text-right"
+      ><v-btn
+        type="submit"
+        color="green"
+        class="text-right"
+        @click.stop="submit(files)"
+        >Save</v-btn
+      ></v-col
+    >
   </Modal>
 </template>
 
@@ -24,7 +26,11 @@ export default {
     value: Boolean,
   },
   data() {
-    return {}
+    return {
+      files: undefined,
+      currentImage: undefined,
+      previewImage: undefined,
+    }
   },
   computed: {
     show: {
@@ -37,11 +43,19 @@ export default {
     },
   },
   methods: {
-    submit() {
-      this.show = false
+    async submit(image) {
+      const res = await this.$store.dispatch('profile/setAvatar', image)
+      if (res) {
+        this.show = false
+      } else {
+        this.show = true
+      }
     },
+    // selectImage(image) {
+
+    //   // this.currentImage = image
+    //   // this.previewImage = URL.createObjectURL(this.currentImage)
+    // },
   },
 }
 </script>
-
-<style></style>

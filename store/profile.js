@@ -83,4 +83,28 @@ export const actions = {
         return false
       })
   },
+  setAvatar({ dispatch }, payload) {
+    return this.$axios
+      .post(
+        'api-web/api/v1/uploads/profile',
+        { image: payload },
+        {
+          headers: { Authorization: this.$cookies.get('access_token') },
+        }
+      )
+      .then((res) => {
+        // dispatch('set/user', res.data.data.user)
+        console.log(res)
+        dispatch('set/error', false)
+        return true
+      })
+      .catch((error) => {
+        dispatch('set/error', true)
+        dispatch(
+          'set/errorMessage',
+          error.response.data.error.errors.toString()
+        )
+        return false
+      })
+  },
 }
