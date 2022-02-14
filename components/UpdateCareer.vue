@@ -3,10 +3,10 @@
     <h1 style="text-align: center">Update Career</h1>
     <v-form ref="form" lazy-validation @submit.prevent="submit()">
       <v-text-field
-        v-model="form.company"
+        v-model="form.company_name"
         label="Company"
         :error-messages="companyErrorMessage"
-        @blur="$v.form.company.$touch()"
+        @blur="$v.form.company_name.$touch()"
       ></v-text-field>
 
       <v-menu
@@ -64,7 +64,7 @@
         block
         color="green"
         class="mt-8"
-        @click.stop="!$v.$invalid ? (show = false) : []"
+        @click.stop="!$v.$invalid"
         >Update</v-btn
       >
     </v-form>
@@ -88,7 +88,8 @@ export default {
   data() {
     return {
       form: {
-        company: '',
+        position: 'default',
+        company_name: '',
         starting_from: new Date(
           Date.now() - new Date().getTimezoneOffset() * 60000
         )
@@ -107,7 +108,7 @@ export default {
       position: {
         required,
       },
-      company: {
+      company_name: {
         required,
       },
       starting_from: {
@@ -133,37 +134,41 @@ export default {
         : []
     },
     companyErrorMessage() {
-      return this.$v.form.company.$dirty && !this.$v.form.company.required
-        ? 'Company is Required'
+      return this.$v.form.company_name.$dirty &&
+        !this.$v.form.company_name.required
+        ? 'Company Name is Required'
         : []
     },
     startingErrorMessage() {
       return this.$v.form.starting_from.$dirty &&
         !this.$v.form.starting_from.required
-        ? 'Company is Required'
+        ? 'Starting Date is Required'
         : []
     },
     endingErrorMessage() {
       return this.$v.form.ending_in.$dirty && !this.$v.form.ending_in.required
-        ? 'Company is Required'
+        ? 'Ending Date is Required'
         : []
     },
   },
   mounted() {
-    if (this.datas) {
-      this.form.company = this.datas.company_name ? this.datas.company_name : ''
-      this.form.starting_from = this.datas.starting_from
-        ? this.datas.starting_from
-        : ''
-      this.form.ending_in = this.datas.ending_in ? this.datas.ending_in : ''
-    }
+    this.form.company_name = this.datas.company_name
+    this.form.starting_from = this.datas.starting_from
+    this.form.ending_in = this.datas.ending_in
   },
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch()
-      // if(!this.$v.$invalid){
-      //     return
-      // }
+      const res = await this.$store.dispatch('profile/setCareer', this.form)
+      if (res) {
+        this.snackbar = false
+        this.text = ''
+        this.show = false
+      } else {
+        this.text = this.errorMessage
+        this.snackbar = true
+        this.snackbarColor = 'red'
+      }
     },
   },
 }
