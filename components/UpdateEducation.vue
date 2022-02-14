@@ -106,14 +106,22 @@ export default {
     },
   },
   mounted() {
-    if (this.datas) {
-      this.form.school_name = this.datas.school_name
-      this.form.graduation_time = this.datas.graduation_time
-    }
+    this.form.school_name = this.datas.school_name
+    this.form.graduation_time = this.datas.graduation_time
   },
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch()
+      const res = await this.$store.dispatch('profile/setEducation', this.form)
+      if (res) {
+        this.snackbar = false
+        this.text = ''
+        this.show = false
+      } else {
+        this.text = this.errorMessage
+        this.snackbar = true
+        this.snackbarColor = 'red'
+      }
     },
   },
 }

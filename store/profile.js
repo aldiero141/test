@@ -64,4 +64,23 @@ export const actions = {
         return false
       })
   },
+  setEducation({ dispatch }, payload) {
+    return this.$axios
+      .post('api-web/api/v1/profile/education', payload, {
+        headers: { Authorization: this.$cookies.get('access_token') },
+      })
+      .then((res) => {
+        dispatch('set/user', res.data.data.user)
+        dispatch('set/error', false)
+        return true
+      })
+      .catch((error) => {
+        dispatch('set/error', true)
+        dispatch(
+          'set/errorMessage',
+          error.response.data.error.errors.toString()
+        )
+        return false
+      })
+  },
 }
