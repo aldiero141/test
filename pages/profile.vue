@@ -13,16 +13,20 @@
     <v-row class="mt-4" style="height: 100vh">
       <v-col class="mr-4">
         <v-row>
-          <v-avatar size="160" class="mx-auto" style="z-index: 1">
+          <UpdatePicture v-model="showUpdatePicture" />
+          <v-avatar
+            size="160"
+            class="mx-auto"
+            style="z-index: 1; cursor: pointer"
+            @click.stop="handlerUpdatePicture"
+          >
             <img
-              :src="
-                user.user_image
-                  ? user.user_image
-                  : 'https://cdn.vuetifyjs.com/images/john.jpg'
-              "
+              v-if="!user.user_image"
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
               alt="John"
               width="100%"
             />
+            <img v-else :src="user.user_image" alt="John" width="100%" />
           </v-avatar>
         </v-row>
         <v-row>
@@ -72,29 +76,29 @@
         <Card v-if="career" class="pt-4">
           <UpdateCareer v-model="showUpdateCareer" :datas="career" />
           <h1 class="mb-8">Career</h1>
-          <v-row class="ml-12">
+          <v-row class="ml-6">
             <p>Company :</p>
             <v-spacer />
-            <p v-if="career.company_name" class="mr-16">
+            <p v-if="career.company_name" class="mr-12">
               {{ career.company_name }}
             </p>
-            <p v-if="!career.company_name" class="mr-16">-</p>
+            <p v-if="!career.company_name" class="mr-12">-</p>
           </v-row>
-          <v-row class="ml-12">
+          <v-row class="ml-6">
             <p>Starting From :</p>
             <v-spacer />
-            <p v-if="career.starting_from" class="mr-16">
+            <p v-if="career.starting_from" class="mr-12">
               {{ career.starting_from }}
             </p>
-            <p v-if="!career.starting_from" class="mr-16">-</p>
+            <p v-if="!career.starting_from" class="mr-12">-</p>
           </v-row>
-          <v-row class="ml-12">
+          <v-row class="ml-6">
             <p>Ending In :</p>
             <v-spacer />
-            <p v-if="career.ending_in" class="mr-16">
+            <p v-if="career.ending_in" class="mr-12">
               {{ career.ending_in }}
             </p>
-            <p v-if="!career.ending_in" class="mr-16">-</p>
+            <p v-if="!career.ending_in" class="mr-12">-</p>
           </v-row>
           <v-btn
             block
@@ -109,21 +113,21 @@
         <Card v-if="education" class="pt-4">
           <UpdateEducation v-model="showUpdateEducation" :datas="education" />
           <h1 class="mb-8">Education</h1>
-          <v-row class="ml-10">
+          <v-row class="ml-6">
             <p>School Name :</p>
             <v-spacer />
-            <p v-if="education.school_name" class="mr-16">
+            <p v-if="education.school_name" class="mr-12">
               {{ education.school_name }}
             </p>
-            <p v-if="!education.school_name" class="mr-16">-</p>
+            <p v-if="!education.school_name" class="mr-12">-</p>
           </v-row>
-          <v-row class="ml-10">
+          <v-row class="ml-6">
             <p>Graduation Time :</p>
             <v-spacer />
-            <p v-if="education.graduation_time" class="mr-16">
+            <p v-if="education.graduation_time" class="mr-12">
               {{ education.graduation_time }}
             </p>
-            <p v-if="!education.graduation_time" class="mr-16">-</p>
+            <p v-if="!education.graduation_time" class="mr-12">-</p>
           </v-row>
           <v-btn
             block
@@ -133,6 +137,14 @@
             >Update Education</v-btn
           >
         </Card>
+        <v-snackbar
+          v-model="snackbar"
+          :color="snackbarColor"
+          :timeout="2000"
+          style="justify-center"
+        >
+          {{ text }}
+        </v-snackbar>
       </v-col>
     </v-row>
   </div>
@@ -148,6 +160,8 @@ export default {
       showUpdateProfile: false,
       showUpdateCareer: false,
       showUpdateEducation: false,
+      showUpdatePicture: false,
+      // showUpdateBanner: false,
     }
   },
   computed: {
@@ -176,6 +190,9 @@ export default {
     },
     handlerUpdateEducation() {
       this.showUpdateEducation = true
+    },
+    handlerUpdatePicture() {
+      this.showUpdatePicture = true
     },
   },
 }
