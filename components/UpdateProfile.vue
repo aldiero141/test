@@ -61,14 +61,7 @@
         @blur="$v.form.bio.$touch()"
       ></v-textarea>
 
-      <v-btn
-        block
-        color="green"
-        class="mt-8"
-        type="submit"
-        @click.stop="!$v.$invalid ? (show = false) : []"
-        >Update</v-btn
-      >
+      <v-btn block color="green" class="mt-8" type="submit">Update</v-btn>
     </v-form>
   </Modal>
 </template>
@@ -163,7 +156,7 @@ export default {
     //   return this.$store.get('profile/user')
     // },
   },
-  mounted() {
+  created() {
     this.form.name = this.datas.name
     this.form.gender = this.datas.gender
     this.form.birthday = this.datas.birthday
@@ -171,13 +164,17 @@ export default {
     this.form.bio = this.datas.bio
   },
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch()
-      // console.log(this.$v)
-      // perform async actions
-      if (!this.$v.$invalid) {
-        // return (this.showOTP = true)
-        // return this.$router.push('/profile')
+      const res = await this.$store.dispatch('profile/setProfile', this.form)
+      if (res) {
+        this.snackbar = false
+        this.text = ''
+        this.show = false
+      } else {
+        this.text = this.errorMessage
+        this.snackbar = true
+        this.snackbarColor = 'red'
       }
     },
   },

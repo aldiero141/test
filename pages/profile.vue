@@ -49,13 +49,13 @@
             <v-row class="ml-12">
               <p>Hometown :</p>
               <v-spacer />
-              <p v-if="!user.hometown" class="mr-16">{{ user.hometown }}</p>
+              <p v-if="user.hometown" class="mr-16">{{ user.hometown }}</p>
               <p v-if="!user.hometown" class="mr-16">-</p>
             </v-row>
             <v-row class="ml-12">
               <p>Bio :</p>
               <v-spacer />
-              <p v-if="!user.bio" class="mr-16">{{ user.bio }}</p>
+              <p v-if="user.bio" class="mr-16">{{ user.bio }}</p>
               <p v-if="!user.bio" class="mr-16">-</p>
             </v-row>
             <v-btn
@@ -75,26 +75,26 @@
           <v-row class="ml-12">
             <p>Company :</p>
             <v-spacer />
-            <p v-if="!career.company_name" class="mr-16">
+            <p v-if="career.company_name" class="mr-16">
               {{ career.company_name }}
             </p>
-            <p v-if="!user.company_name" class="mr-16">-</p>
+            <p v-if="!career.company_name" class="mr-16">-</p>
           </v-row>
           <v-row class="ml-12">
             <p>Starting From :</p>
             <v-spacer />
-            <p v-if="!career.starting_from" class="mr-16">
+            <p v-if="career.starting_from" class="mr-16">
               {{ career.starting_from }}
             </p>
-            <p v-if="!user.starting_from" class="mr-16">-</p>
+            <p v-if="!career.starting_from" class="mr-16">-</p>
           </v-row>
           <v-row class="ml-12">
             <p>Ending In :</p>
             <v-spacer />
-            <p v-if="!career.ending_in" class="mr-16">
+            <p v-if="career.ending_in" class="mr-16">
               {{ career.ending_in }}
             </p>
-            <p v-if="!user.ending_in" class="mr-16">-</p>
+            <p v-if="!career.ending_in" class="mr-16">-</p>
           </v-row>
           <v-btn
             block
@@ -112,7 +112,7 @@
           <v-row class="ml-10">
             <p>School Name :</p>
             <v-spacer />
-            <p v-if="!education.school_name" class="mr-16">
+            <p v-if="education.school_name" class="mr-16">
               {{ education.school_name }}
             </p>
             <p v-if="!education.school_name" class="mr-16">-</p>
@@ -120,7 +120,7 @@
           <v-row class="ml-10">
             <p>Graduation Time :</p>
             <v-spacer />
-            <p v-if="!education.graduation_time" class="mr-16">
+            <p v-if="education.graduation_time" class="mr-16">
               {{ education.graduation_time }}
             </p>
             <p v-if="!education.graduation_time" class="mr-16">-</p>
