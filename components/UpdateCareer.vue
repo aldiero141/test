@@ -59,19 +59,6 @@
         ></v-date-picker>
       </v-menu>
 
-      <!-- <v-text-field
-        v-model="form.starting_from"
-        label="Starting From"
-      ></v-text-field>
-      <v-text-field v-model="form.ending_in" label="Ending In"></v-text-field> -->
-
-      <!-- <v-text-field
-                    v-model="form.bio"
-                    label="bio"
-                    :error-messages="passwordErrorMessage"
-                    @blur="$v.form.password.$touch()"
-                    ></v-text-field> -->
-
       <v-btn
         type="submit"
         block
@@ -96,11 +83,11 @@ export default {
   name: 'UpdateCareerComponent',
   props: {
     value: Boolean,
+    datas: { type: Object, default: () => {} },
   },
   data() {
     return {
       form: {
-        position: '',
         company: '',
         starting_from: new Date(
           Date.now() - new Date().getTimezoneOffset() * 60000
@@ -161,6 +148,15 @@ export default {
         ? 'Company is Required'
         : []
     },
+  },
+  mounted() {
+    if (this.datas) {
+      this.form.company = this.datas.company_name ? this.datas.company_name : ''
+      this.form.starting_from = this.datas.starting_from
+        ? this.datas.starting_from
+        : ''
+      this.form.ending_in = this.datas.ending_in ? this.datas.ending_in : ''
+    }
   },
   methods: {
     submit() {

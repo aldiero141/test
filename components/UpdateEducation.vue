@@ -58,6 +58,7 @@ export default {
   name: 'UpdateEducationComponent',
   props: {
     value: Boolean,
+    datas: { type: Object, default: () => {} },
   },
   data() {
     return {
@@ -103,6 +104,12 @@ export default {
         ? 'Graduation time is Required'
         : []
     },
+  },
+  mounted() {
+    if (this.datas) {
+      this.form.school_name = this.datas.school_name
+      this.form.graduation_time = this.datas.graduation_time
+    }
   },
   methods: {
     submit() {

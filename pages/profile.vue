@@ -1,8 +1,5 @@
 <template>
   <div class="d-flex flex-column my-10" style="height: 100vh">
-    <UpdateProfile v-model="showUpdateProfile" :datas="user" />
-    <UpdateCareer v-model="showUpdateCareer" :datas="career" />
-    <UpdateEducation v-model="showUpdateEducation" :datas="education" />
     <v-row class="align-center mb-4">
       <Card
         style="
@@ -30,6 +27,7 @@
         </v-row>
         <v-row>
           <Card v-if="user" style="padding-top: 8em; margin-top: -5em">
+            <UpdateProfile v-model="showUpdateProfile" :datas="user" />
             <v-row class="ml-12">
               <p>Name :</p>
               <v-spacer />
@@ -72,6 +70,7 @@
       </v-col>
       <v-col>
         <Card v-if="career" class="pt-4">
+          <UpdateCareer v-model="showUpdateCareer" :datas="career" />
           <h1 class="mb-8">Career</h1>
           <v-row class="ml-12">
             <p>Company :</p>
@@ -108,6 +107,7 @@
       </v-col>
       <v-col class="mr-n3">
         <Card v-if="education" class="pt-4">
+          <UpdateEducation v-model="showUpdateEducation" :datas="education" />
           <h1 class="mb-8">Education</h1>
           <v-row class="ml-10">
             <p>School Name :</p>
