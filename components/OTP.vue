@@ -54,14 +54,14 @@ export default {
   methods: {
     onFinish(rsp) {
       this.$store.dispatch('otp/otpMatch', {
-        user_id: this.$store.state.register.user.id,
+        user_id: this.$store.get('register/user').id,
         otp_code: rsp,
       })
-      return this.$router.push('/profile')
+      return this.$router.push('/login')
     },
     resendOTP() {
       this.$store.dispatch('otp/otpRequest', {
-        phone: this.$store.state.register.phoneNumber,
+        phone: this.$store.get('register/phoneNumber'),
       })
       this.snackbarColor = 'gray-darken-4'
       this.snackbar = true

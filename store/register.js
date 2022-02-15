@@ -1,3 +1,5 @@
+import EasyAccess, { defaultMutations } from 'vuex-easy-access'
+
 export const state = () => ({
   user: {},
   phoneNumber: '',
@@ -6,40 +8,28 @@ export const state = () => ({
   errorMessage: '',
 })
 
+export const mutations = { ...defaultMutations(state()) }
+export const plugins = [EasyAccess()]
+
 export const actions = {
-  signUp({ commit }, payload) {
-    commit('setLoading', true)
+  signUp({ dispatch }, payload) {
+    dispatch('set/loading', true)
     return this.$axios
       .post('api-web/api/v1/register', payload)
       .then((res) => {
-        commit('setError', false)
-        commit('setUser', res)
-        commit('setPhoneNumber', res)
-        commit('setLoading', false)
+        dispatch('set/error', false)
+        dispatch('set/user', res.data.data.user)
+        dispatch('set/phoneNumber', res.data.data.user.phone)
+        dispatch('set/loading', false)
         return true
       })
       .catch((error) => {
-        commit('setError', true)
-        commit('setErrorMessage', error.response.data.error.errors.toString())
+        dispatch('set/error', false)
+        dispatch(
+          'set/errorMessage',
+          error.response.data.error.errors.toString()
+        )
         return false
       })
-  },
-}
-
-export const mutations = {
-  setPhoneNumber(state, res) {
-    state.phoneNumber = res.data.data.user.phone
-  },
-  setUser(state, res) {
-    state.user = res.data.data.user
-  },
-  setLoading(state, res) {
-    state.loading = res
-  },
-  setError(state, res) {
-    state.error = res
-  },
-  setErrorMessage(state, res) {
-    state.errorMessage = res
   },
 }

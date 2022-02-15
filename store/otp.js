@@ -1,40 +1,33 @@
+import EasyAccess, { defaultMutations } from 'vuex-easy-access'
+
 export const state = () => ({
   user: {},
   token: {},
   loading: false,
 })
 
+export const mutations = { ...defaultMutations(state()) }
+export const plugins = [EasyAccess()]
+
 export const actions = {
-  async otpRequest({ commit }, payload) {
-    commit('setLoading', true)
+  async otpRequest({ dispatch }, payload) {
+    dispatch('set/loading', true)
     const res = await this.$axios.post(
       'api-web/api/v1/register/otp/request',
       payload
     )
-    commit('setUser', res)
-    commit('setLoading', false)
+    dispatch('set/user', res)
+    dispatch('set/loading', false)
     return res
   },
-  async otpMatch({ commit }, payload) {
-    commit('setLoading', true)
+  async otpMatch({ dispatch }, payload) {
+    dispatch('set/loading', true)
     const res = await this.$axios.post(
       'api-web/api/v1/register/otp/match',
       payload
     )
-    commit('setToken', res)
-    commit('setLoading', false)
+    dispatch('set/token', res)
+    dispatch('set/loading', false)
     return res
-  },
-}
-
-export const mutations = {
-  setUser(state, res) {
-    state.user = res.data.data.user
-  },
-  setToken(state, res) {
-    state.access_token = res.data.data.user.user
-  },
-  setLoading(state, res) {
-    state.loading = res
   },
 }

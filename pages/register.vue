@@ -118,10 +118,10 @@ export default {
         : []
     },
     error() {
-      return this.$store.state.register.error
+      return this.$store.get('register/error')
     },
     errorMessage() {
-      return this.$store.state.register.errorMessage
+      return this.$store.get('register/errorMessage')
     },
   },
 
@@ -135,7 +135,7 @@ export default {
           this.text = ''
           this.showOTP = true
           this.$store.dispatch('otp/otpRequest', {
-            phone: this.$store.state.register.phoneNumber,
+            phone: this.$store.get('register/phoneNumber'),
           })
         } else {
           this.text = this.errorMessage

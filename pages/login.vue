@@ -95,14 +95,11 @@ export default {
         ? 'Password is too long'
         : []
     },
-    token() {
-      return this.$store.state.login.token
-    },
     error() {
-      return this.$store.state.login.error
+      return this.$store.get('login/error')
     },
     errorMessage() {
-      return this.$store.state.login.errorMessage
+      return this.$store.get('login/errorMessage')
     },
   },
   methods: {
@@ -113,7 +110,6 @@ export default {
         if (res) {
           this.snackbar = false
           this.text = ''
-          this.$cookies.set('access_token', this.token.access_token)
           this.$router.push('/profile')
         } else {
           this.text = this.errorMessage

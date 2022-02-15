@@ -6,6 +6,7 @@ export const state = () => ({
 })
 export const mutations = { ...defaultMutations(state()) }
 export const plugins = [EasyAccess()]
+
 export const actions = {
   getProfile({ dispatch }) {
     return this.$axios

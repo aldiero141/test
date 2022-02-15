@@ -1,38 +1,32 @@
+import EasyAccess, { defaultMutations } from 'vuex-easy-access'
 export const state = () => ({
   token: {},
+  access_token: '',
   error: false,
   errorMessage: '',
   loading: false,
 })
 
+export const mutations = { ...defaultMutations(state()) }
+export const plugins = [EasyAccess()]
+
 export const actions = {
-  signIn({ commit }, payload) {
+  signIn({ dispatch }, payload) {
     return this.$axios
       .post('api-web/api/v1/oauth/sign_in', payload)
       .then((res) => {
-        commit('setError', false)
-        commit('setToken', res)
+        this.$cookies.set('access_token', res.data.data.user.access_token)
+        dispatch('set/error', false)
+        dispatch('set/access_token', res.data.data.user.access_token)
         return true
       })
       .catch((error) => {
-        commit('setError', true)
-        commit('setErrorMessage', error.response.data.error.errors.toString())
+        dispatch('set/error', true)
+        dispatch(
+          'set/errorMessage',
+          error.response.data.error.errors.toString()
+        )
         return false
       })
-  },
-}
-
-export const mutations = {
-  //   setUser(state, res) {
-  //     state.user = res.data.data.user
-  //   },
-  setToken(state, res) {
-    state.token = res.data.data.user
-  },
-  setError(state, res) {
-    state.error = res
-  },
-  setErrorMessage(state, res) {
-    state.errorMessage = res
   },
 }
