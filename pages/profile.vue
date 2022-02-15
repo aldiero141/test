@@ -1,28 +1,32 @@
 <template>
-  <div class="d-flex flex-column my-10" style="height: 100vh">
-    <v-row class="align-center mb-4">
-      <Card class="d-flex align-center ma-0 pa-0" style="cursor: pointer">
-        <UpdateBanner v-model="showUpdateBanner" />
-        <img
-          src="https://picsum.photos/id/11/500/300"
-          alt="banner-default"
-          style="
-            object-fit: cover;
-            border-radius: 0.5em;
-            height: 30vh;
-            z-index: -0;
-          "
-          width="100%"
-          @click.stop="handlerUpdateBanner"
-        />
-        <!-- <img
-          v-else
-          :src="user.cover_picture.url"
-          alt="banner-default"
-          style="object-fit: cover; border-radius: 0.5em; height: 30vh"
-          width="100%"
-        /> -->
-      </Card>
+  <div class="d-flex flex-column my-10" style="height: 100%">
+    <v-row
+      class="align-center mb-4"
+      style="z-index: 2; cursor: pointer; height: 40vh"
+      @click.stop="handlerUpdateBanner"
+    >
+      <UpdateBanner v-model="showUpdateBanner" />
+      <Card
+        v-if="user.cover_picture"
+        :style="{
+          backgroundImage: 'url(' + user.cover_picture.url + ')',
+          backgroundPosisition: 'center',
+          backgroundSize: 'cover',
+          height: '40vh',
+          width: '100%',
+        }"
+      />
+      <Card
+        v-else
+        style="
+          background: url('https://picsum.photos/id/11/500/300') no-repeat;
+          background-position: center;
+          background-size: cover;
+          height: 40vh
+          width: 100%
+          z-index: 4;
+        "
+      />
     </v-row>
     <v-row class="mt-4" style="height: 100vh">
       <v-col class="mr-4">

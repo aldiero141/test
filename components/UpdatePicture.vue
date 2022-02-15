@@ -7,10 +7,6 @@
       label="Profile Picture"
       @change="handleFileUpload($event)"
     ></v-file-input>
-    <!-- <label
-      >File
-      <input type="file" @change="handleFileUpload($event)" />
-    </label> -->
     <v-col class="text-right"
       ><v-btn
         type="submit"

@@ -126,4 +126,22 @@ export const actions = {
         return false
       })
   },
+  setCover({ dispatch }, payload) {
+    return this.$axios
+      .post('api-web/api/v1/uploads/cover', payload, {
+        headers: { Authorization: this.$cookies.get('access_token') },
+      })
+      .then((res) => {
+        dispatch('set/error', false)
+        return true
+      })
+      .catch((error) => {
+        dispatch('set/error', true)
+        dispatch(
+          'set/errorMessage',
+          error.response.data.error.errors.toString()
+        )
+        return false
+      })
+  },
 }
