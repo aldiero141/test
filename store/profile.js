@@ -90,7 +90,30 @@ export const actions = {
       })
       .then((res) => {
         // dispatch('set/user', res.data.data.user)
-        console.log(res)
+        dispatch('setDefaultAvatar', res.data.data.user_picture.id)
+        dispatch('set/error', false)
+        return true
+      })
+      .catch((error) => {
+        dispatch('set/error', true)
+        dispatch(
+          'set/errorMessage',
+          error.response.data.error.errors.toString()
+        )
+        return false
+      })
+  },
+
+  setDefaultAvatar({ dispatch }, payload) {
+    return this.$axios
+      .post(
+        'api-web/api/v1/uploads/profile/default',
+        { id: payload },
+        {
+          headers: { Authorization: this.$cookies.get('access_token') },
+        }
+      )
+      .then((res) => {
         dispatch('set/error', false)
         return true
       })

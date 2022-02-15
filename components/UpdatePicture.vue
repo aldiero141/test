@@ -1,16 +1,16 @@
 <template>
   <Modal v-model="show">
-    <!-- <v-file-input
-        accept="image/png, image/jpeg, image/bmp"
-        placeholder="Pick a Profile Picture"
-        prepend-icon="mdi-camera"
-        label="Profile Picture"
-        @change="handleFileUpload($event)"
-      ></v-file-input> -->
-    <label
+    <v-file-input
+      accept="image/png, image/jpeg, image/bmp"
+      placeholder="Pick a Profile Picture"
+      prepend-icon="mdi-camera"
+      label="Profile Picture"
+      @change="handleFileUpload($event)"
+    ></v-file-input>
+    <!-- <label
       >File
       <input type="file" @change="handleFileUpload($event)" />
-    </label>
+    </label> -->
     <v-col class="text-right"
       ><v-btn
         type="submit"
@@ -51,12 +51,11 @@ export default {
       const res = await this.$store.dispatch('profile/setAvatar', formData)
       if (res) {
         this.show = false
-      } else {
-        this.show = true
+        location.reload()
       }
     },
     handleFileUpload(event) {
-      this.file = event.target.files[0]
+      this.file = event
     },
   },
 }

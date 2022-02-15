@@ -35,12 +35,17 @@
             @click.stop="handlerUpdatePicture"
           >
             <img
-              v-if="!user.user_image"
+              v-if="!user.user_picture"
               src="https://cdn.vuetifyjs.com/images/john.jpg"
               alt="John"
               width="100%"
             />
-            <img v-else :src="user.user_image" alt="John" width="100%" />
+            <img
+              v-else
+              :src="user.user_picture.picture.url"
+              alt="John"
+              width="100%"
+            />
           </v-avatar>
         </v-row>
         <v-row>
