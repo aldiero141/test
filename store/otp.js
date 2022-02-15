@@ -6,11 +6,13 @@ export const state = () => ({
 
 export const actions = {
   async otpRequest({ commit }, payload) {
+    commit('setLoading', true)
     const res = await this.$axios.post(
       'api-web/api/v1/register/otp/request',
       payload
     )
     commit('setUser', res)
+    commit('setLoading', false)
     return res
   },
   async otpMatch({ commit }, payload) {

@@ -47,21 +47,10 @@ export default {
         this.$emit('input', value)
       },
     },
-    // user() {
-    //   return this.$store.state.register.user
-    // },
-    // phoneNumber() {
-    //   return this.$store.state.register.phoneNumber
-    // },
     loading() {
-      return this.$store.state.otp.loading
+      return this.$store.get('otp/loading')
     },
   },
-  // mounted() {
-  //   this.$store.dispatch('otp/otpRequest', {
-  //     phone: this.$store.state.register.phoneNumber,
-  //   })
-  // },
   methods: {
     onFinish(rsp) {
       this.$store.dispatch('otp/otpMatch', {

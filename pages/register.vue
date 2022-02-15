@@ -31,6 +31,13 @@
           <v-btn type="submit" color="blue"> register </v-btn>
         </div>
       </v-form>
+
+      <v-overlay absolute :value="$store.get('register/loading')">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
+      </v-overlay>
     </Card>
 
     <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
