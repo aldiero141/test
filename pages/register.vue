@@ -42,12 +42,13 @@
 <script>
 import {
   required,
-  // helpers,
+  helpers,
   minLength,
   maxLength,
   alpha,
 } from 'vuelidate/lib/validators'
 
+const phoneNumberFormat = helpers.regex('alpha', /^(\+62)8[1-9][0-9]{6,9}$/i)
 export default {
   name: 'RegisterPage',
   data() {
@@ -71,6 +72,7 @@ export default {
     form: {
       phone: {
         required,
+        phoneNumberFormat,
       },
       password: {
         required,
@@ -88,8 +90,9 @@ export default {
     phoneNumberErrorMessage() {
       return this.$v.form.phone.$dirty && !this.$v.form.phone.required
         ? 'Phone Number is Required'
-        : // : this.$v.form.phone.$dirty && !this.$v.form.phone.phoneNumberFormat ? 'Wrong phone number format'
-          []
+        : this.$v.form.phone.$dirty && !this.$v.form.phone.phoneNumberFormat
+        ? 'Wrong phone number format'
+        : []
     },
     passwordErrorMessage() {
       return this.$v.form.password.$dirty && !this.$v.form.password.required
