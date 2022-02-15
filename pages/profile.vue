@@ -1,13 +1,14 @@
 <template>
   <div class="d-flex flex-column my-10" style="height: 100%">
     <v-row
+      v-if="user.cover_picture"
       class="align-center mb-4"
       style="z-index: 2; cursor: pointer; height: 40vh"
       @click.stop="handlerUpdateBanner"
     >
       <UpdateBanner v-model="showUpdateBanner" />
       <Card
-        v-if="user.cover_picture"
+        v-if="user.cover_picture.url"
         :style="{
           backgroundImage: 'url(' + user.cover_picture.url + ')',
           backgroundPosisition: 'center',
@@ -17,14 +18,13 @@
         }"
       />
       <Card
-        v-else
+        v-if="!user.cover_picture.url"
         style="
           background: url('https://picsum.photos/id/11/500/300') no-repeat;
           background-position: center;
           background-size: cover;
           height: 40vh
           width: 100%
-          z-index: 4;
         "
       />
     </v-row>
