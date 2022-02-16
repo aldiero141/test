@@ -24,6 +24,7 @@ export default {
   plugins: [
     { src: '@/plugins/validation', ssr: true },
     { src: '@/plugins/axios' },
+    { src: '@/plugins/filters' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -35,6 +36,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/moment',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

@@ -70,7 +70,9 @@
             <v-row class="ml-12">
               <p>Birthday :</p>
               <v-spacer />
-              <p v-if="user.birthday" class="mr-16">{{ user.birthday }}</p>
+              <p v-if="user.birthday" class="mr-16">
+                {{ user.birthday | date }}
+              </p>
               <p v-if="!user.birthday" class="mr-16">-</p>
             </v-row>
             <v-row class="ml-12">
@@ -111,7 +113,7 @@
             <p>Starting From :</p>
             <v-spacer />
             <p v-if="career.starting_from" class="mr-12">
-              {{ career.starting_from }}
+              {{ career.starting_from | date }}
             </p>
             <p v-if="!career.starting_from" class="mr-12">-</p>
           </v-row>
@@ -119,7 +121,7 @@
             <p>Ending In :</p>
             <v-spacer />
             <p v-if="career.ending_in" class="mr-12">
-              {{ career.ending_in }}
+              {{ career.ending_in | date }}
             </p>
             <p v-if="!career.ending_in" class="mr-12">-</p>
           </v-row>
@@ -148,7 +150,7 @@
             <p>Graduation Time :</p>
             <v-spacer />
             <p v-if="education.graduation_time" class="mr-12">
-              {{ education.graduation_time }}
+              {{ education.graduation_time | date }}
             </p>
             <p v-if="!education.graduation_time" class="mr-12">-</p>
           </v-row>
