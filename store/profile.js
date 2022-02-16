@@ -10,9 +10,7 @@ export const plugins = [EasyAccess()]
 export const actions = {
   getProfile({ dispatch }) {
     return this.$axios
-      .get('api-web/api/v1/profile/me', {
-        headers: { Authorization: this.$cookies.get('access_token') },
-      })
+      .get('api-web/api/v1/profile/me')
       .then((res) => {
         dispatch('set/error', false)
         dispatch('set/user', res.data.data.user)
