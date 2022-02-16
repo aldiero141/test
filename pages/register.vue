@@ -56,6 +56,11 @@ import {
 } from 'vuelidate/lib/validators'
 
 const phoneNumberFormat = helpers.regex('alpha', /^(\+62)8[1-9][0-9]{6,9}$/i)
+const passwordRegex = helpers.regex(
+  'alpha',
+  /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+)
+
 export default {
   name: 'RegisterPage',
   data() {
@@ -83,8 +88,9 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(4),
+        minLength: minLength(8),
         maxLength: maxLength(16),
+        passwordRegex,
       },
       country: {
         required,
@@ -98,7 +104,7 @@ export default {
       return this.$v.form.phone.$dirty && !this.$v.form.phone.required
         ? 'Phone Number is Required'
         : this.$v.form.phone.$dirty && !this.$v.form.phone.phoneNumberFormat
-        ? 'Wrong phone number format'
+        ? 'Phone Number format must be +628xxxxxx'
         : []
     },
     passwordErrorMessage() {
@@ -108,6 +114,8 @@ export default {
         ? 'Password is too short'
         : this.$v.form.password.$dirty && !this.$v.form.password.maxLength
         ? 'Password is too long'
+        : this.$v.form.password.$dirty && !this.$v.form.password.passwordRegex
+        ? 'Password must contain a letter and a number'
         : []
     },
     countryErrorMessage() {
